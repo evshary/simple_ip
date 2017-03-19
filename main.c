@@ -4,6 +4,8 @@
 
 int main(int argc, char *argv[])
 {
+    unsigned char *payload = NULL;
+
     if (argc != 2) {
         printf("FORMAT: ./main [pcap_file_name]\n");
         return -1;
@@ -13,6 +15,10 @@ int main(int argc, char *argv[])
         printf("%s-%d: Parse the pcap file error.\n", __func__, __LINE__);
         return -1;
     }
+
+    do {
+        get_next_pkt(&payload);
+    } while (payload != NULL);
 
     if (PCAP_PARSE_SUCCESS != free_pcap_file()) {
         printf("%s-%d: Free the pcap file error.\n", __func__, __LINE__);

@@ -6,6 +6,7 @@
 #define PCAP_PARSE_FORMAT  -2
 
 int parse_pcap_file(char *file_name);
+unsigned int get_next_pkt(unsigned char **payload);
 int free_pcap_file();
 
 #endif

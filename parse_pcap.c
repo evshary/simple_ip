@@ -64,7 +64,7 @@ int parse_pcap_file(char *file_name)
         pkt_tmp = (PKT_LIST *)malloc(sizeof(PKT_LIST));
         pkt_tmp->pkt_next = NULL;
         fread(&pkt_tmp->pkt_header, sizeof(struct pcap_pkthdr), 1, fp);
-        show_pkt_info(&pkt_tmp->pkt_header);
+        //show_pkt_info(&pkt_tmp->pkt_header);
         // malloc new space for pkt content
         pkt_tmp->pkt_content = (unsigned char *)malloc(pkt_tmp->pkt_header.caplen);
         fread(pkt_tmp->pkt_content, pkt_tmp->pkt_header.caplen, 1, fp);
@@ -83,7 +83,28 @@ int parse_pcap_file(char *file_name)
     return PCAP_PARSE_SUCCESS;
 }
 
+unsigned int get_next_pkt(unsigned char **payload)
+{
+    PKT_LIST *pkt_tmp = pkt_now;
+
+    if (pkt_now == NULL) {
+        *payload = NULL;
+        return 0;
+    }
+    pkt_now = pkt_now->pkt_next;
+    show_pkt_info(&pkt_tmp->pkt_header);
+    *payload = pkt_tmp->pkt_content;
+    return pkt_tmp->pkt_header.caplen;
+}
+
 int free_pcap_file()
 {
+    pkt_now = pkt_head;
+    do {
+        pkt_head = pkt_head->pkt_next;
+        free(pkt_now->pkt_content);
+        free(pkt_now);
+        pkt_now = pkt_head;
+    } while (pkt_now != NULL);
     return PCAP_PARSE_SUCCESS;
 }
