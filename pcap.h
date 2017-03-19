@@ -1,4 +1,4 @@
-#ifdef _PCAP_H
+#ifndef _PCAP_H
 #define _PCAP_H
 
 #define int32 int

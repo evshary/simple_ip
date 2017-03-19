@@ -1,20 +1,20 @@
 CC=gcc
-CC_OPT=-c
+C_FLAGS=-c
 
 LD=ld
 
 STYLE=astyle
 
-all: parse_pcap main
+all: parse_pcap main build
 
 parse_pcap:
-	${CC} ${CC_OPT} parse_pcap.c 
+	${CC} ${C_FLAGS} parse_pcap.c 
 
 main:
-	${CC} ${CC_OPT} main.c
+	${CC} ${C_FLAGS} main.c
 
 build:
-	${LD} main.c parse_pcap.c -o main.out
+	${CC} main.o parse_pcap.o -o main.out
 
 clean:
 	rm *.o *.out

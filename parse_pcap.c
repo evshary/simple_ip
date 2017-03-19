@@ -1,11 +1,14 @@
 #include "pcap.h"
+#include "parse_pcap.h"
 
-unsigned int parse_pcap_file(unsigned char *file_name)
+int parse_pcap_file(char *file_name)
 {
+    if (file_name == 0)
+        return PCAP_PARSE_NO_FILE;
     return 0;
 }
 
-unsigned int free_pcap_file()
+int free_pcap_file()
 {
     return 0;
 }
