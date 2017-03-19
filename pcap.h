@@ -15,13 +15,13 @@ struct pcap_file_header {
     uint32 linktype;
 };
 
-struct timeval {
+struct pkt_timeval {
     uint32 tv_sec;   // second
     uint32 tv_usec;  // micro second
 };
 
 struct pcap_pkthdr {
-    struct timeval ts;
+    struct pkt_timeval ts;
     uint32 caplen;
     uint32 len;
 };
