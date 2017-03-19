@@ -22,7 +22,7 @@ struct timeval {
 
 struct pcap_pkthdr {
     struct timeval ts;
-    uint32 caplen; 
+    uint32 caplen;
     uint32 len;
 };
 
