@@ -1,23 +1,30 @@
 CC=gcc
-C_FLAGS=-c
 
 LD=ld
-
 STYLE=astyle
 
-all: parse_pcap main build
+CFLAGS =  -Wall
+CFLAGS = -fPIC -Wall -Wextra -O0 -g # C flags
 
-parse_pcap:
-	${CC} ${C_FLAGS} parse_pcap.c 
+OBJ_DIR = elf
 
-main:
-	${CC} ${C_FLAGS} main.c
+DIR=net
+SRC = $(wildcard ${DIR}/*.c) main.c parse_pcap.c
+INC = $(wildcard ${DIR}/*.h) parse_pcap.h
+OBJ = $(SRC:.c=.o)
 
-build:
-	${CC} main.o parse_pcap.o -o main.out
+BIN=main
+
+all: build
+
+build: ${OBJ}
+	${CC} $^ -o ${BIN}
 
 clean:
 	rm *.o *.out
 
 style:
 	${STYLE} --style=kr --indent=spaces=4 -S -H -U -p --suffix=none --recursive "*.c" "*.h"
+
+print:
+	echo ${OBJ}
