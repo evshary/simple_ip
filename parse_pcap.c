@@ -92,7 +92,7 @@ unsigned int get_next_pkt(unsigned char **payload)
         return 0;
     }
     pkt_now = pkt_now->pkt_next;
-    show_pkt_info(&pkt_tmp->pkt_header);
+    //show_pkt_info(&pkt_tmp->pkt_header);
     *payload = pkt_tmp->pkt_content;
     return pkt_tmp->pkt_header.caplen;
 }

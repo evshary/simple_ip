@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "parse_pcap.h"
+#include "net/interf.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,9 +16,12 @@ int main(int argc, char *argv[])
         printf("%s-%d: Parse the pcap file error.\n", __func__, __LINE__);
         return -1;
     }
-
+    Interface eth0;
+    add_interface(&eth0, "eth0", "\00\11\22\33\44\55");
     do {
-        get_next_pkt(&payload);
+        int length;
+        length = get_next_pkt(&payload);
+        parse_packet(payload, length, &eth0);
     } while (payload != NULL);
 
     if (PCAP_PARSE_SUCCESS != free_pcap_file()) {

@@ -35,17 +35,27 @@ typedef struct EthernetFrame {
     UINT8 Checksum[4];
 } EthernetFrame;
 
+typedef struct _EthernetHeader {
+    //UINT8 Preamble[8];
+    UINT8 DestMac[6];
+    UINT8 SrcMac[6];
+    union {
+        UINT16 PayloadLen;
+        UINT16 Type;
+    };
+    UINT8 payload[0];
+} EthernetHeader;
+
 typedef struct Packet {
     unsigned int Len;
-    EthernetFrame Frame;
-
     UINT8 *pRaw;
 } Packet;
 
 typedef RESULT(*pParse)(Packet *, Interface *);
 
 void add_interface(Interface *pInterF, const char *szName, UINT8 Mac[6]);
-void parse_packet(Packet *pData, Interface *pInterF);
+void parse_packet(unsigned char *payload, unsigned int length, Interface *pInterF);
 RESULT parse_ethernet(Packet *pData, Interface *pInterF);
+void show_ethernet_info(EthernetHeader *eth_header);
 
 #endif //INTERF_H

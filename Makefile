@@ -3,7 +3,6 @@ CC=gcc
 LD=ld
 STYLE=astyle
 
-CFLAGS =  -Wall
 CFLAGS = -fPIC -Wall -Wextra -O0 -g # C flags
 
 OBJ_DIR = elf
@@ -13,7 +12,7 @@ SRC = $(wildcard ${DIR}/*.c) main.c parse_pcap.c
 INC = $(wildcard ${DIR}/*.h) parse_pcap.h
 OBJ = $(SRC:.c=.o)
 
-BIN=main
+BIN=main.out
 
 all: build
 
